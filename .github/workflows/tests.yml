@@ -45,5 +45,13 @@ jobs:
       - name: Install the checked-out setfit
         run: python -m pip install .
 
+      - name: Load cached HF models
+        uses: actions/cache@v3
+        id: restore-hf-cache
+        with:
+          path: ~/.cache/huggingface
+          key: hf-models
+        
+
       - name: Run unit tests
         run: pytest -sv tests/
