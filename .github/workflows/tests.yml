@@ -62,8 +62,17 @@ jobs:
         run: |
           echo "OLD_HF_CACHE_HASH=$(find ~/.cache/huggingface ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
           pytest -sv tests/
-          ls -la ~/.cache/huggingface/datasets
           echo "NEW_HF_CACHE_HASH=$(find ~/.cache/huggingface ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
+
+      - name: Check content of HF cache
+        shell: bash
+        run : |
+          ls -la ~/.cache/huggingface/datasets
+          ls -la ~/.cache/huggingface/evaluate
+          ls -la ~/.cache/huggingface/metrics
+          ls -la ~/.cache/huggingface/modules
+          ls -la ~/.cache/huggingface/modules/datasets_modules
+          ls -la ~/.cache/huggingface/modules/evaluate_modules
 
       - name: Save new HF models to cache
         uses: actions/cache/save@v3
