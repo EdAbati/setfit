@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "OLD_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/huggingface/datasets ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
           pytest -sv tests/
-          echo "NEW_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/huggingface/datasets~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
+          echo "NEW_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/huggingface/datasets ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
 
       - name: Check content of HF cache
         shell: bash
