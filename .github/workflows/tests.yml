@@ -75,11 +75,12 @@ jobs:
 
       - name: Save new HF models to cache
         uses: actions/cache/save@v3
+        # Only save cache if the hash has changed
+        if: env.NEW_HF_CACHE_HASH != env.OLD_HF_CACHE_HASH
         with:
           path: |
             ~/.cache/huggingface/hub
             ~/.cache/huggingface/datasets
             ~/.cache/torch
           key: hf-models-${{ matrix.os }}-${{ env.NEW_HF_CACHE_HASH }}
-        # Only save cache if the hash has changed
-        if: ${{ env.NEW_HF_CACHE_HASH}} != ${{ env.OLD_HF_CACHE_HASH }}
+        
