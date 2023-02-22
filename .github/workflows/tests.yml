@@ -69,11 +69,9 @@ jobs:
         shell: bash
         run : |
           ls -la ~/.cache/huggingface/datasets
-          ls -la ~/.cache/huggingface/evaluate
-          ls -la ~/.cache/huggingface/metrics
-          ls -la ~/.cache/huggingface/modules
-          ls -la ~/.cache/huggingface/modules/datasets_modules
-          ls -la ~/.cache/huggingface/modules/evaluate_modules
+          ls -la ~/.cache/huggingface/datasets/sst2/default/2.0.0/9896208a8d85db057ac50c72282bcb8fe755accc671a57dd8059d4e130961ed5
+          ls -la ~/.cache/huggingface/datasets/SetFit___json 
+          ls -la ~/.cache/huggingface/datasets/SetFit___parquet
 
       - name: Save new HF models to cache
         uses: actions/cache/save@v3
