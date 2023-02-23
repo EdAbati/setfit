@@ -50,7 +50,6 @@ jobs:
         with:
           path: |
             ~/.cache/huggingface/hub
-            ~/.cache/huggingface/datasets
             ~/.cache/torch
           key: hf-models-${{ matrix.os }}-${{ env.NEW_HF_CACHE_HASH }}
           restore-keys: |
@@ -59,17 +58,17 @@ jobs:
       - name: Run unit tests
         shell: bash
         run: |
-          echo "OLD_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/huggingface/datasets ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
+          echo "OLD_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
           pytest -sv tests/
-          echo "NEW_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/huggingface/datasets ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
+          echo "NEW_HF_CACHE_HASH=$(find ~/.cache/huggingface/hub ~/.cache/torch -type f -exec sha256sum {} + | LC_ALL=C sort | sha256sum | cut -d ' ' -f 1)" >> $GITHUB_ENV
 
-      - name: Check content of HF cache
-        shell: bash
-        run : |
-          ls -la ~/.cache/huggingface/datasets
-          ls -la ~/.cache/huggingface/datasets/sst2/default/2.0.0/9896208a8d85db057ac50c72282bcb8fe755accc671a57dd8059d4e130961ed5
-          ls -la ~/.cache/huggingface/datasets/SetFit___json 
-          ls -la ~/.cache/huggingface/datasets/SetFit___parquet
+      # - name: Check content of HF cache
+      #   shell: bash
+      #   run : |
+      #     ls -la ~/.cache/huggingface/datasets
+      #     ls -la ~/.cache/huggingface/datasets/sst2/default/2.0.0/9896208a8d85db057ac50c72282bcb8fe755accc671a57dd8059d4e130961ed5
+      #     ls -la ~/.cache/huggingface/datasets/SetFit___json 
+      #     ls -la ~/.cache/huggingface/datasets/SetFit___parquet
 
       - name: Save new HF models to cache
         uses: actions/cache/save@v3
@@ -78,7 +77,6 @@ jobs:
         with:
           path: |
             ~/.cache/huggingface/hub
-            ~/.cache/huggingface/datasets
             ~/.cache/torch
           key: hf-models-${{ matrix.os }}-${{ env.NEW_HF_CACHE_HASH }}
         
